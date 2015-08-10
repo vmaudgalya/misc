@@ -1,3 +1,7 @@
+/************
+* O(n) time 
+* O(n) space
+*************/
 import java.util.HashMap;
 
 public class UniqueOne {
@@ -26,7 +30,9 @@ public class UniqueOne {
   }
 
   public static void main(String[] args) {
-    System.out.println(hasAllUnique(args[0]));
+    String[] words = {"tuba", "firetruck"};
+    for (String word : words) {
+      System.out.println("Does " + word + " contain all unique characters? " + hasAllUnique(word));
+    }
   }
-
 }

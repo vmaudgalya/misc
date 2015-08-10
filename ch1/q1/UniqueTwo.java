@@ -1,3 +1,8 @@
+/***************************************************************
+* O(nlog(n)) time 
+* [Worst case is O(n^2) but probability of that case is 1/(n!)]
+* O(n) space
+****************************************************************/
 import java.util.Arrays;
 
 public class UniqueTwo {
@@ -23,7 +28,10 @@ public class UniqueTwo {
   }
 
   public static void main(String[] args) {
-    System.out.println(hasAllUnique(args[0]));
+    String[] words = {"tuba", "firetruck"};
+    for (String word : words) {
+      System.out.println("Does " + word + " contain all unique characters? " + hasAllUnique(word));
+    }
   }
   
 }
