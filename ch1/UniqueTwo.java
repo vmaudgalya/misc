@@ -1,16 +1,17 @@
 import java.util.Arrays;
 
 public class UniqueTwo {
-  
-  public static void main(String[] args) {
-    String word = args[0];
-    System.out.println(hasAllUnique(word));
+
+  public static void validateInput(String word) {
+    if (word.equals("")) {
+      throw new RuntimeException("Error: Empty strings are invalid input");
+    } else if (word == null) {
+      throw new RuntimeException("Error: Null strings are invalid input");
+    }
   }
 
   public static boolean hasAllUnique(String word) {
-    if (word == null || word.equals("")) {
-      return false; // assumption that invalid strings aren't accepted
-    }
+    validateInput(word); // Assumed that null and empty strings are invalid.
     char[] letters = word.toCharArray();
     Arrays.sort(letters); // bottleneck operation, O(nlog(n)) time, in place quicksort
     for (int i = 1; i < letters.length; i++) {
@@ -20,4 +21,9 @@ public class UniqueTwo {
     }
     return true;
   }
+
+  public static void main(String[] args) {
+    System.out.println(hasAllUnique(args[0]));
+  }
+  
 }
