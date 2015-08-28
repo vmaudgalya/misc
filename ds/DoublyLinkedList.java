@@ -29,7 +29,7 @@ public class DoublyLinkedList<Item> {
       tail = head;
     } else {
       Node first = new Node();
-      first.data = data;
+      first.data = data; z
       first.next = head;
       head.prev = first;
       head = first;
@@ -99,14 +99,17 @@ public class DoublyLinkedList<Item> {
       return victim.data;
     } else {
       Node current = head.next;    
-      while (current.data != data) {
-        current = current.next;
+      while (current != null) {
+        if (current.data == data) {
+          Item data = current.data;
+          current.prev.next = current.next;
+          current.next.prev = current.prev;
+          current.next = null;
+          current.prev = null;
+          return data;
+        }
       }
-      current.next.prev = current.prev;
-      current.prev.next = current.next;
-      current.prev = null;
-      current.next = null;
-      return current.data;
+      return null;
     }
   }
 
@@ -289,14 +292,23 @@ public class DoublyLinkedList<Item> {
 
   /*****************************************
   * Returns true if the list contains a loop
+  * Tortoise & Hare algorithm
   * Time: O(n)
   * Space: O(1)
   ******************************************/
-  // public boolean hasLoop(Node n) {
-  //   Node slow = n;
-  //   Node fast = n;
-
-  // }
+  public boolean hasLoop() {
+    Node slow = head;
+    Node fast = head;
+    while (slow != null && fast != null && fast.next != null) {
+      if (slow == fast) {
+        return true;
+      } else {
+        fast = fast.next.next;
+        slow = slow.next;
+      }
+    }
+    return false;
+  }
 
   /***********************************
   * Returns element at provided index
@@ -319,12 +331,6 @@ public class DoublyLinkedList<Item> {
     return current.data;
   }
 
-  /**
-  *
-  *
-  *
-  */
-
   /***************************************
   * Prints the middle element of the list.
   * Time: O(n)
@@ -342,8 +348,8 @@ public class DoublyLinkedList<Item> {
 
   /*****************
   * Prints the list.
-  * O(n) Time
-  * O(1) Space
+  * Time: O(n)
+  * Space: O(1)
   ******************/
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -375,38 +381,38 @@ public class DoublyLinkedList<Item> {
     }
   }
 
-  public boolean isPalindrome() {
-    if(head == null) {
-        return true;
-    }
-    Node p1 = head;
-    Node p2 = head;
-    Node p3 = p1.next;
-    Node pre = p1;
-    while(p2.next != null && p2.next.next != null) {
-      p2 = p2.next.next;
-      pre = p1;
-      p1 = p3;
-      p3 = p3.next;
-      p1.next = pre;
-    }
-    // System.out.println(toString());
+  // public boolean isPalindrome() {
+  //   if(head == null) {
+  //       return true;
+  //   }
+  //   Node p1 = head;
+  //   Node p2 = head;
+  //   Node p3 = p1.next;
+  //   Node pre = p1;
+  //   while(p2.next != null && p2.next.next != null) {
+  //     p2 = p2.next.next;
+  //     pre = p1;
+  //     p1 = p3;
+  //     p3 = p3.next;
+  //     p1.next = pre;
+  //   }
+  //   // System.out.println(toString());
 
-    if(p2.next == null) {
-      p1 = p1.next;
-    }
+  //   if(p2.next == null) {
+  //     p1 = p1.next;
+  //   }
     
-    while(p3 != null) {
-      if(!p1.data.equals(p3.data)) {
-        return false;
-      }
-      p1 = p1.next;
-      p3 = p3.next;
-    }
-    // System.out.println(toString());
+  //   while(p3 != null) {
+  //     if(!p1.data.equals(p3.data)) {
+  //       return false;
+  //     }
+  //     p1 = p1.next;
+  //     p3 = p3.next;
+  //   }
+  //   // System.out.println(toString());
 
-    return true;
-  }
+  //   return true;
+  // }
 
   /* For testing purposes */
   public static void main(String[] args) {
