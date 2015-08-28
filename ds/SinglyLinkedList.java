@@ -57,16 +57,16 @@ public class SinglyLinkedList<Item> {
       throw new java.util.NoSuchElementException("The list is empty!");
     } else {
       if (head.data == data) {
-        Item data = head.data;
+        Item victim = head.data;
         head = head.next;
-        return data;
+        return victim;
       } else {
         Node current = head;
         while (current.next != null) {
           if (current.next.data == data) {
-            Item data = current.next.data;
+            Item victim = current.next.data;
             current.next = current.next.next;
-            return data;
+            return victim;
           }
           current = current.next;
         }

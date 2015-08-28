@@ -29,7 +29,7 @@ public class DoublyLinkedList<Item> {
       tail = head;
     } else {
       Node first = new Node();
-      first.data = data; z
+      first.data = data;
       first.next = head;
       head.prev = first;
       head = first;
@@ -101,12 +101,12 @@ public class DoublyLinkedList<Item> {
       Node current = head.next;    
       while (current != null) {
         if (current.data == data) {
-          Item data = current.data;
+          Item victim = current.data;
           current.prev.next = current.next;
           current.next.prev = current.prev;
           current.next = null;
           current.prev = null;
-          return data;
+          return victim;
         }
       }
       return null;
@@ -417,30 +417,28 @@ public class DoublyLinkedList<Item> {
   /* For testing purposes */
   public static void main(String[] args) {
     DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
-    // for (int i = 1; i <= 5; i++) {
-    //   list.insert(i);  
-    // }
-    // System.out.println("Original: " + list);
-    // list.reverse();
-    // System.out.println("After reversing: " + list);
-    // list.append(44);
-    // System.out.println("Appended 44: " + list);
-    // list.append(1, 43); // append 43 after 1
-    // System.out.println("Appended 43 after 1: " + list);
-    // list.append(62);
-    // System.out.println("Appended 62: " + list);
-    // System.out.println("Removing " + list.remove(43) + ".\n" + list);
-    // System.out.println("Iteratively find length: " + list.ilength());
-    // System.out.println("Recursively find length: " + list.rlength());
-    // System.out.println("Does the list contain 5? " + list.contains(5));
-    // System.out.println("Does the list contain 99? " + list.contains(99));
-    list.append(1);
-    list.append(2);
-    list.append(3);
-    list.append(2);
-    list.append(1);
-    System.out.println(list.isPalindrome());
-    System.out.println(list.toString());
+    for (int i = 1; i <= 5; i++) {
+      list.insert(i);  
+    }
+    System.out.println("Original: " + list);
+    list.reverse();
+    System.out.println("After reversing: " + list);
+    list.append(44);
+    System.out.println("Appended 44: " + list);
+    list.append(1, 43); // append 43 after 1
+    System.out.println("Appended 43 after 1: " + list);
+    list.append(62);
+    System.out.println("Appended 62: " + list);
+    System.out.println("Removing " + list.remove(43) + ".\n" + list);
+    System.out.println("Iteratively find length: " + list.ilength());
+    System.out.println("Recursively find length: " + list.rlength());
+    System.out.println("Does the list contain 5? " + list.icontains(5));
+    System.out.println("Does the list contain 99? " + list.rcontains(99));
+    // list.append(1);
+    // list.append(2);
+    // list.append(3);
+    // list.append(2);
+    // list.append(1);
 
   }
 
