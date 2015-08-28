@@ -66,6 +66,8 @@ public class DoublyLinkedList<Item> {
   * Space: O(1)
   */
   public void append(Item data, Item newData) {
+    nullCheck(data);
+    nullCheck(newData);
     if (data == tail.data) {
       append(newData);
     } else {
@@ -153,6 +155,191 @@ public class DoublyLinkedList<Item> {
     return size;
   }
 
+  /******************************************
+  * Iteratively finds the length of the list.
+  * Time: O(n)
+  * Space: O(1)
+  *******************************************/
+  public int ilength() {
+    Node current = head;
+    int count = 0;
+    while (current != null) {
+      current = current.next;
+      count++;
+    }
+    return count;
+  }
+
+  /******************************************
+  * Recursively finds the length of the list.
+  * Time: O(n)
+  * Space: O(1)
+  *******************************************/
+  public int rlength() {
+    return rlength(head);
+  }
+  /* Recursive helper */
+  private int rlength(Node n) {
+    if (n == null) {
+      return 0;
+    } else {
+      return 1 + rlength(n.next);
+    }
+  }
+
+  /******************************************
+  * Returns true if list contains the element
+  * Iterative method
+  * Time: O(n)
+  * Space: O(1)
+  *******************************************/
+  public boolean icontains(Item data) {
+    nullCheck(data);
+    if (isEmpty()) {
+      return false;
+    }
+    Node first = head;
+    Node last = tail;
+    while (first != last) {
+      if (first.data == data || last.data == data) {
+        return true;
+      } else {
+        first = first.next;
+        last = last.prev;
+      }
+    }
+    return false;
+  }
+
+  /******************************************
+  * Returns true if list contains the element
+  * Recursive method
+  * Time: O(n)
+  * Space: O(1)
+  *******************************************/
+  public boolean rcontains(Item data) {
+    Node cur = head;
+    return rcontains(cur, data);
+  }
+
+  private boolean rcontains(Node current, Item data) {
+    if (current == null) {
+      return false;
+    }
+    
+    if (current.data == data) {
+      return true;
+    } else {
+      return rcontains(current.next, data);
+    }
+  }
+
+  /*************************************************************************************
+  * Returns nth element from the end.
+  * Note - this can be done more efficiently using the tail pointer,
+  * however the purpose of this exercise is to be achieved using only the head pointer.
+  * Time: O(n)
+  * Space: O(1)
+  *************************************************************************************/
+  public Item nthFromEnd(int n) {
+    if (n > size) {
+      throw new java.util.NoSuchElementException("Element exceeds list size!");
+    }
+    Node behind = head;
+    Node ahead = head;
+    int count = 0;
+    while (count < n) {
+      ahead = ahead.next;
+      count++;
+    }
+    while (ahead != null) {
+      ahead = ahead.next;
+      behind = behind.next;
+    }
+    return behind.data;
+  }
+
+  /******************
+  * Deletes the list.
+  * Time: O(1)
+  * Space: O(1)
+  *******************/
+  public void delete() {
+    head = null;
+  }
+
+  /*************************************************
+  * Counts occurences of the given data in the list.
+  * Time: O(n)
+  * Space: O(1)
+  **************************************************/
+  public int countOccurences(Item data) {
+    nullCheck(data);
+    Node current = head;
+    int count = 0;
+    while (current != null) {
+      if (current.data == data) {
+        count++;
+      }
+      current = current.next;
+    }
+    return count;
+  }
+
+
+  /*****************************************
+  * Returns true if the list contains a loop
+  * Time: O(n)
+  * Space: O(1)
+  ******************************************/
+  // public boolean hasLoop(Node n) {
+  //   Node slow = n;
+  //   Node fast = n;
+
+  // }
+
+  /***********************************
+  * Returns element at provided index
+  * Time: O(n)
+  * Space: O(1)
+  ************************************/
+  public Item valueAt(int index) {
+    if (head == null) {
+      throw new java.util.NoSuchElementException("List is empty!");
+    }
+    if (index > size-1) {
+      throw new ArrayIndexOutOfBoundsException("Index out of bounds");
+    }
+    int count = 0;
+    Node current = head;
+    while (count != index) {
+      current = current.next;
+      count++;
+    }
+    return current.data;
+  }
+
+  /**
+  *
+  *
+  *
+  */
+
+  /***************************************
+  * Prints the middle element of the list.
+  * Time: O(n)
+  * Space: O(1)
+  ****************************************/
+  public Item printMiddle() {
+    Node slow = head;
+    Node fast = head;
+    while ((fast != null) && (fast.next != null)) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow.data;
+  }
+
   /*****************
   * Prints the list.
   * O(n) Time
@@ -188,22 +375,67 @@ public class DoublyLinkedList<Item> {
     }
   }
 
+  public boolean isPalindrome() {
+    if(head == null) {
+        return true;
+    }
+    Node p1 = head;
+    Node p2 = head;
+    Node p3 = p1.next;
+    Node pre = p1;
+    while(p2.next != null && p2.next.next != null) {
+      p2 = p2.next.next;
+      pre = p1;
+      p1 = p3;
+      p3 = p3.next;
+      p1.next = pre;
+    }
+    // System.out.println(toString());
+
+    if(p2.next == null) {
+      p1 = p1.next;
+    }
+    
+    while(p3 != null) {
+      if(!p1.data.equals(p3.data)) {
+        return false;
+      }
+      p1 = p1.next;
+      p3 = p3.next;
+    }
+    // System.out.println(toString());
+
+    return true;
+  }
+
   /* For testing purposes */
   public static void main(String[] args) {
     DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
-    for (int i = 1; i <= 5; i++) {
-      list.insert(i);  
-    }
-    System.out.println("Original: " + list);
-    list.reverse();
-    System.out.println("After reversing: " + list);
-    list.append(44);
-    System.out.println("Appended 44: " + list);
-    list.append(1, 43); // append 43 after 1
-    System.out.println("Appended 43 after 1: " + list);
-    list.append(62);
-    System.out.println("Appended 62: " + list);
-    System.out.println("Removing " + list.remove(43) + ".\n" + list);
+    // for (int i = 1; i <= 5; i++) {
+    //   list.insert(i);  
+    // }
+    // System.out.println("Original: " + list);
+    // list.reverse();
+    // System.out.println("After reversing: " + list);
+    // list.append(44);
+    // System.out.println("Appended 44: " + list);
+    // list.append(1, 43); // append 43 after 1
+    // System.out.println("Appended 43 after 1: " + list);
+    // list.append(62);
+    // System.out.println("Appended 62: " + list);
+    // System.out.println("Removing " + list.remove(43) + ".\n" + list);
+    // System.out.println("Iteratively find length: " + list.ilength());
+    // System.out.println("Recursively find length: " + list.rlength());
+    // System.out.println("Does the list contain 5? " + list.contains(5));
+    // System.out.println("Does the list contain 99? " + list.contains(99));
+    list.append(1);
+    list.append(2);
+    list.append(3);
+    list.append(2);
+    list.append(1);
+    System.out.println(list.isPalindrome());
+    System.out.println(list.toString());
+
   }
 
 }
