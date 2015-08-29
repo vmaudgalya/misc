@@ -2,8 +2,9 @@
 * Given a sorted array, and an index, 
 * find the k elements closest to the 
 * number at index n.
-* Time = O(k)
 *
+* Time: O(k)
+* Space: O(1)
 *************************************/
 public class kClosest {
 

@@ -1,6 +1,8 @@
 /********************************************
-* O(n) time
-* In-place
+* Reverse a string.
+*
+* Time: O(n) time
+* Space: In-place
 * If we are just printing the reversed string
 *********************************************/
 public class ReverseOne {

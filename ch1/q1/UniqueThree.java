@@ -1,7 +1,11 @@
 /***************************************************************
-* O(nlog(n)) time 
+* Implement an algorithm to determine if a 
+* string has all unique characters. What if you
+* can not use additional data structures?
+*
+* Time: O(nlog(n))
 * [Worst case is O(n^2) but probability of that case is 1/(n!)]
-* O(n) space
+* Space: O(n)
 ****************************************************************/
 import java.util.Random;
 

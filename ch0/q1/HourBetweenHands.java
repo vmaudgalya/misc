@@ -1,7 +1,10 @@
-/************
-* O(1) space
-* O(1) time
-************/
+/***********************************
+* Given a time, calculate the angle 
+* between the hour and minute hands.
+*
+* Time: O(1)
+* Space: O(1)
+************************************/
 public class HourBetweenHands {
 
   public static double findAngle(int hours, int minutes) {

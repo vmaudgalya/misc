@@ -1,6 +1,11 @@
 /**
-* O(n) space where n is the number of words in the magazine 
-* O(n) time where n is the number of words in the magazine
+* A ransom note can be formed by cutting words out of 
+* a magazine to form a new sentence. How would you figure 
+* out if a ransom note (string) can be formed from a given 
+* magazine (string)?
+*
+* Time: O(n) where n is the number of words in the magazine
+* Space: O(n) where n is the number of words in the magazine 
 */
 
 import java.util.HashMap;

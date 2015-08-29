@@ -1,8 +1,10 @@
-/********************************************
+/****************************************
+* Reverse a string.
+* 
 * O(n) time
 * O(n) space
 * If we are actually reversing the String
-*********************************************/
+*****************************************/
 public class ReverseTwo {
   
   public static String reverse(String word) {

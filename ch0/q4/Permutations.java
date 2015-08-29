@@ -1,7 +1,9 @@
-/**
-* O(n) space
-* O(n!) time
-*/
+/************************************
+* Print all permutations of a string.
+*
+* Time: O(n!)
+* Space: O(n)
+*************************************/
 
 public class Permutations {
 

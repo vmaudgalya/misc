@@ -1,7 +1,11 @@
-/************
-* O(n) time 
-* O(n) space
-*************/
+/**********************************************
+* Implement an algorithm to determine if a 
+* string has all unique characters. What if you
+* can not use additional data structures?
+*
+* Time: O(n) 
+* Space: O(n)
+**********************************************/
 import java.util.HashMap;
 
 public class UniqueOne {
