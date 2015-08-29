@@ -263,6 +263,27 @@ public class SinglyLinkedList<Item> {
     return true;
   }
 
+  /****************************************
+  * Recursively prints the list in reverse
+  *
+  * Time: O(n)
+  * Space: O(1)
+  ****************************************/
+  public void printReverse() {
+    if (size == 1 || isEmpty()) {
+      return;
+    }
+    printReverse(head);
+  }
+  private void printReverse(Node current) {
+    if (current.next == null) {
+      System.out.print("[ " + current.data + ", ");
+    } else {
+      printReverse(current.next);
+      System.out.print(current.data + (current == head ? " ]\n" : ", "));
+    }
+  }
+
   /*****************
   * Prints the list.
   * Time: O(n)
@@ -319,6 +340,18 @@ public class SinglyLinkedList<Item> {
     animals.deleteList();
     System.out.println("Deleted list: " + animals);
     palindromeTest(animals);
+    animals.deleteList();
+    System.out.print("Appending cat, dog, horse, pigeon, fish and seagull: ");
+    animals.append("cat");
+    animals.append("dog");
+    animals.append("horse");
+    animals.append("pigeon");
+    animals.append("fish");
+    animals.append("seagull");
+    System.out.println(animals);
+    System.out.println("Printing the reverse of the list recursively");
+    animals.printReverse();
+
     
 
   }
