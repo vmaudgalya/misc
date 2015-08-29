@@ -2,6 +2,7 @@
 * DoublyLinkedList API
 * Implemented as a doubly-linked list with head and tail pointers
 * for efficient operations.
+* List does not support null elements.
 * @author Varun Maudgalya
 *****************************************************************/
 public class DoublyLinkedList<Item> {
@@ -96,6 +97,7 @@ public class DoublyLinkedList<Item> {
       Node victim = head;
       head.next.prev = null;
       head = head.next;
+      size--;
       return victim.data;
     } else {
       Node current = head.next;    
@@ -106,6 +108,7 @@ public class DoublyLinkedList<Item> {
           current.next.prev = current.prev;
           current.next = null;
           current.prev = null;
+          size--;
           return victim;
         }
       }
@@ -119,7 +122,7 @@ public class DoublyLinkedList<Item> {
   * Space: O(1)
   *******************/
   public void reverse() {
-    if (isEmpty()) {
+    if (isEmpty() || size == 1) {
       return;
     }
     Node cur = head;
@@ -298,7 +301,7 @@ public class DoublyLinkedList<Item> {
   ******************************************/
   public boolean hasLoop() {
     Node slow = head;
-    Node fast = head;
+    Node fast = head.next;
     while (slow != null && fast != null && fast.next != null) {
       if (slow == fast) {
         return true;
@@ -346,6 +349,27 @@ public class DoublyLinkedList<Item> {
     return slow.data;
   }
 
+  /*****************************************
+  * Returns true if the list is a palindrome
+  * Time: O(n)
+  * Space: O(1)
+  ******************************************/
+  public boolean isPalindrome() {
+    if (size == 1 || isEmpty()) {
+      return true;
+    }
+    Node first = head;
+    Node last = tail;
+    while (first != last) {
+      if (first.data != last.data) {
+        return false;
+      }
+      first = first.next;
+      last = last.prev;
+    }
+    return true;
+  }
+
   /*****************
   * Prints the list.
   * Time: O(n)
@@ -381,39 +405,6 @@ public class DoublyLinkedList<Item> {
     }
   }
 
-  // public boolean isPalindrome() {
-  //   if(head == null) {
-  //       return true;
-  //   }
-  //   Node p1 = head;
-  //   Node p2 = head;
-  //   Node p3 = p1.next;
-  //   Node pre = p1;
-  //   while(p2.next != null && p2.next.next != null) {
-  //     p2 = p2.next.next;
-  //     pre = p1;
-  //     p1 = p3;
-  //     p3 = p3.next;
-  //     p1.next = pre;
-  //   }
-  //   // System.out.println(toString());
-
-  //   if(p2.next == null) {
-  //     p1 = p1.next;
-  //   }
-    
-  //   while(p3 != null) {
-  //     if(!p1.data.equals(p3.data)) {
-  //       return false;
-  //     }
-  //     p1 = p1.next;
-  //     p3 = p3.next;
-  //   }
-  //   // System.out.println(toString());
-
-  //   return true;
-  // }
-
   /* For testing purposes */
   public static void main(String[] args) {
     DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
@@ -434,12 +425,16 @@ public class DoublyLinkedList<Item> {
     System.out.println("Recursively find length: " + list.rlength());
     System.out.println("Does the list contain 5? " + list.icontains(5));
     System.out.println("Does the list contain 99? " + list.rcontains(99));
-    // list.append(1);
-    // list.append(2);
-    // list.append(3);
-    // list.append(2);
-    // list.append(1);
-
+    System.out.println("Is list a palindrome? " + list.isPalindrome());
+    System.out.println("Deleting the list.");
+    list.delete();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+    list.append(2);
+    list.append(1);
+    System.out.println("New list is: " + list);
+    System.out.println("Is list a palindrome? " + list.isPalindrome());
   }
 
 }
