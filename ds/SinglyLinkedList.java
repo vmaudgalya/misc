@@ -5,22 +5,22 @@
 * @author Varun Maudgalya
 *****************************************************************/
 public class SinglyLinkedList<Item> {
-	
-	private Node head;
-	private int size;
+  
+  private Node head;
+  private int size;
 
 
-	private class Node {
-		Item data;
-		Node next;
-	}
+  private class Node {
+    Item data;
+    Node next;
+  }
 
   /****************************
   * Add to the end of the list.
   * Time: O(n)
   * Space: O(1)
   *****************************/
-	public void append(Item data) {
+  public void append(Item data) {
     if (isEmpty()) {
       head = new Node();
       head.data = data;
