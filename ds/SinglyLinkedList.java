@@ -125,7 +125,7 @@ public class SinglyLinkedList<Item> {
 
   /***************************************
   * Returns true if list contains the data
-  * Time: O(1)
+  * Time: O(n)
   * Space: O(1)
   ***************************************/
   public boolean contains(Item data) {
