@@ -302,6 +302,59 @@ public class SinglyLinkedList<Item extends Comparable> {
     size++;
   }
 
+  /********************************************************
+  * Returns the intersection node of a Y-shaped LinkedList
+  * @param head1 - one head of the list
+  * @param head2 - the other head of the list
+  * @return null if input is invalid
+  * Time: O(n)
+  * Space: O(1)
+  *********************************************************/
+  private Node intersectionPoint(Node head1, Node head2) {
+    if (head1 == null || head2 == null) {
+      return null;
+    }
+    Node firstHead = head1;
+    Node secondHead = head2;
+    int firstLength = 0;
+    int secondLength = 0;
+    while (firstHead != null || secondHead != null) {
+      if (firstHead == null) {
+        secondHead = secondHead.next;
+        secondLength++;
+      } else if (secondHead == null) {
+        firstHead = firstHead.next;
+        firstLength++;
+      } else {
+        firstHead = firstHead.next;
+        secondHead = secondHead.next;
+        firstLength++;
+        secondLength++;
+      }
+    }
+    firstHead = head1;
+    secondHead = head2;
+    if (firstLength > secondLength) {
+      int difference = firstLength-secondLength;
+      while (difference != 0) {
+        firstHead = firstHead.next;
+        difference--;
+      }
+    } else if (secondLength > firstLength) {
+      int difference = secondLength-firstLength;
+      while (difference != 0) {
+        secondHead = secondHead.next;
+        difference--;
+      }
+    }
+    while (firstHead != null && secondHead != null) {
+      if (firstHead == secondHead) {
+        return firstHead;
+      }
+    }
+    return null; // If the lists are not connected
+  }
+
   /****************************************
   * Recursively prints the list in reverse
   *
