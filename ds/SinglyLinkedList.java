@@ -125,7 +125,7 @@ public class SinglyLinkedList<Item extends Comparable> {
 
   /***************************************
   * Returns true if list contains the data
-  * Time: O(n)
+  * Time: O(1)
   * Space: O(1)
   ***************************************/
   public boolean contains(Item data) {
