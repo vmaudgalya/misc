@@ -4,7 +4,7 @@
 * List does not support null elements.
 * @author Varun Maudgalya
 *****************************************************************/
-public class SinglyLinkedList<Item> {
+public class SinglyLinkedList<Item extends Comparable> {
   
   private Node head;
   private int size;
@@ -125,7 +125,7 @@ public class SinglyLinkedList<Item> {
 
   /***************************************
   * Returns true if list contains the data
-  * Time: O(1)
+  * Time: O(n)
   * Space: O(1)
   ***************************************/
   public boolean contains(Item data) {
@@ -263,6 +263,45 @@ public class SinglyLinkedList<Item> {
     return true;
   }
 
+
+  /*******************************************
+  * Inserts into a sorted list in a sorted way
+  * Time: O(n)
+  * Space: O(1)
+  *******************************************/
+  public void sortedInsert(Item data) {
+    nullCheck(data);
+    if (isEmpty()) {
+      head = new Node();
+      head.data = data;
+    } else {
+      Node lower = head;
+      Node higher = head.next;
+      while (lower != null) {
+        if ((higher == null) || 
+          (data.compareTo(lower.data) >= 0) && (data.compareTo(higher.data) <= 0)) {
+
+          Node n = new Node();
+          n.data = data;
+          n.next = higher;
+          lower.next = n;
+          return;
+        } else if (data.compareTo(lower.data) <= 0) {
+          Node n = new Node();
+          n.data = data;
+          n.next = lower;
+          if (lower == head) {
+            head = n; // If lower is head, reset head
+          }
+          return;
+        }
+        lower = lower.next;
+        higher = higher.next;
+      }
+    }
+    size++;
+  }
+
   /****************************************
   * Recursively prints the list in reverse
   *
@@ -349,11 +388,15 @@ public class SinglyLinkedList<Item> {
     animals.append("fish");
     animals.append("seagull");
     System.out.println(animals);
-    System.out.println("Printing the reverse of the list recursively");
+    System.out.print("Printing the reverse of the list recursively: ");
     animals.printReverse();
-
-    
-
+    SinglyLinkedList<Integer> numbers = new SinglyLinkedList<Integer>();
+    numbers.append(1);
+    numbers.append(2);
+    numbers.append(3);
+    numbers.append(5);
+    System.out.println("looking at new list of numbers:" + numbers);
+    sortedInsertTest(numbers);
   }
 
   public static void palindromeTest(SinglyLinkedList<String> list) {
@@ -378,8 +421,18 @@ public class SinglyLinkedList<Item> {
     System.out.println("Is the list " + list + " a palindrome? " + list.isPalindrome());
   }
 
+  public static void sortedInsertTest(SinglyLinkedList<Integer> list) {
+    System.out.print("Insert 4 in sorted order into the list: ");
+    list.sortedInsert(4);
+    System.out.println(list);
+    
+    System.out.print("Inserting 6 in sorted order into the list: ");
+    list.sortedInsert(6);
+    System.out.println(list);
 
-
-
+    System.out.print("Inserting 0 in sorted order into the list: ");
+    list.sortedInsert(0);
+    System.out.println(list);
+  }
 
 }
