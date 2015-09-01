@@ -62,7 +62,7 @@ public class SinglyLinkedList<Item extends Comparable> {
     if (isEmpty()) {
       throw new java.util.NoSuchElementException("The list is empty!");
     } else {
-      if (head.data == data) {
+      if (head.data.compareTo(data) == 0) {
         Item victim = head.data;
         head = head.next;
         size--;
@@ -70,7 +70,7 @@ public class SinglyLinkedList<Item extends Comparable> {
       } else {
         Node current = head;
         while (current.next != null) {
-          if (current.next.data == data) {
+          if (current.next.data.compareTo(data) == 0) {
             Item victim = current.next.data;
             current.next = current.next.next;
             size--;
@@ -131,7 +131,7 @@ public class SinglyLinkedList<Item extends Comparable> {
   public boolean contains(Item data) {
     Node current = head;
     while (current != null) {
-      if (current.data == data) {
+      if (current.data.compareTo(data) == 0) {
         return true;
       } else {
         current = current.next;
@@ -174,7 +174,7 @@ public class SinglyLinkedList<Item extends Comparable> {
     Node current = head;
     int count = 0;
     while (current != null) {
-      if (current.data == data) {
+      if (current.data.compareTo(data) == 0) {
         count++;
       }
       current = current.next;
@@ -223,12 +223,21 @@ public class SinglyLinkedList<Item extends Comparable> {
     head = previous;
   }
 
-  /******************************************
+  /********************************************************
   * Returns true if the list is a palindrome.
-  * Note: This currently modifies the list
+  *
+  * Note: This currently modifies the list.
+  * This can be prevented via making a copy of the
+  * list which will result in O(n) time and space.
+  * This can also be prevented via reversing the
+  * reversed portion of the list, which can be done
+  * in O(n) time and O(1) space, however this results
+  * in complicating the code. Thus, circumstances must 
+  * be evaluated before making implementation adjustments
+  *
   * Time: O(n)
   * Space: O(1)
-  ******************************************/
+  ********************************************************/
   public boolean isPalindrome() {
     if (isEmpty() || size == 1) {
       return true;
@@ -253,7 +262,7 @@ public class SinglyLinkedList<Item extends Comparable> {
       previous = previous.next;
     }
     while (previous != null && current != null) {
-      if (previous.data != current.data) {
+      if (previous.data.compareTo(current.data) != 0) {
         return false;
       } else {
         previous = previous.next;
@@ -262,7 +271,6 @@ public class SinglyLinkedList<Item extends Comparable> {
     }
     return true;
   }
-
 
   /*******************************************
   * Inserts into a sorted list in a sorted way
@@ -353,6 +361,31 @@ public class SinglyLinkedList<Item extends Comparable> {
       }
     }
     return null; // If the lists are not connected
+  }
+
+  /*********************************************
+  * Removes duplicates from a sorted linked list
+  * Time: O(n)
+  * Space: O(1)
+  **********************************************/
+  public void removeDuplicates() {
+    if (isEmpty() || size == 1) {
+      return;
+    } else {
+      Node second = head;
+      Node first = head.next;
+      while (first != null) {
+        if (second.data.compareTo(first.data) == 0) {
+          while (first != null && second.data.compareTo(first.data) == 0) {
+            first = first.next;
+          }
+          second.next = first;
+        } else {
+          first = first.next;
+          second = second.next;
+        }
+      }
+    }
   }
 
   /****************************************
@@ -450,6 +483,8 @@ public class SinglyLinkedList<Item extends Comparable> {
     numbers.append(5);
     System.out.println("looking at new list of numbers:" + numbers);
     sortedInsertTest(numbers);
+    numbers.removeDuplicates();
+    System.out.println("Removed duplicates from sorted list: " + numbers);
   }
 
   public static void palindromeTest(SinglyLinkedList<String> list) {
@@ -475,13 +510,17 @@ public class SinglyLinkedList<Item extends Comparable> {
   }
 
   public static void sortedInsertTest(SinglyLinkedList<Integer> list) {
-    System.out.print("Insert 4 in sorted order into the list: ");
-    list.sortedInsert(4);
-    System.out.println(list);
+    for (int i = 0; i < 2; i++) {
+      System.out.print("Insert 4 in sorted order into the list: ");
+      list.sortedInsert(4);
+      System.out.println(list);
+    }
     
-    System.out.print("Inserting 6 in sorted order into the list: ");
-    list.sortedInsert(6);
-    System.out.println(list);
+    for (int i = 0; i < 4; i++) {
+      System.out.print("Inserting 6 in sorted order into the list: ");
+      list.sortedInsert(6);
+      System.out.println(list);
+    }
 
     System.out.print("Inserting 0 in sorted order into the list: ");
     list.sortedInsert(0);
