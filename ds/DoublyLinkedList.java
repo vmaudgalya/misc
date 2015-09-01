@@ -59,13 +59,13 @@ public class DoublyLinkedList<Item> {
     size++;
   }
 
-  /**
+  /*************************************************************
   * Add after first occurence of specified element in the list.
   * @param data - the specified element to add after
   * @param newData - the data to add
   * Time: O(n)
   * Space: O(1)
-  */
+  *************************************************************/
   public void append(Item data, Item newData) {
     nullCheck(data);
     nullCheck(newData);
