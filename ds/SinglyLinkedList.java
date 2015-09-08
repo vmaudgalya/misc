@@ -388,6 +388,76 @@ public class SinglyLinkedList<Item extends Comparable> {
     }
   }
 
+  /*********************************************
+  * Moves last element of the list to the front.
+  *
+  * Time: O(n)
+  * Space: O(1)
+  **********************************************/
+  public void moveLastToFront() {
+    Node current = head;
+    while (current.next.next != null) {
+      current = current.next;
+    }
+    Item data = current.next.data;
+    current.next = null;
+    Node first = new Node();
+    first.data = data;
+    first.next = head;
+    head = first;
+  }
+
+  /****************************************
+  * Deletes alternate nodes in the list
+  * Ex: 1->2->3->4->5 becomes 1->3->5
+  *
+  * Time: O(n)
+  * Space: O(1)
+  ****************************************/
+  public void deleteAlternateElements() {
+    Node current = head;
+    while (current != null && current.next != null) {
+      current.next = current.next.next;
+      current = current.next;
+    }
+  }
+
+  /***********************************************
+  * Creates two lists from one each consisting
+  * of alternate nodes from the list.
+  * Ex: 1->2->3->4->5 becomes 1->3->5 and 2->4
+  *
+  * Time: O(n) - Assuming append is done in O(1)
+  *              with an incrementing tail pointer
+  * Space: O(1)
+  ************************************************/
+  public void alternatingSplit() {
+    SinglyLinkedList<Item> odds = new SinglyLinkedList<Item>();
+    SinglyLinkedList<Item> evens = new SinglyLinkedList<Item>();
+    Node odd = head;
+    Node even = head.next;
+    if (size % 2 == 0) {
+      while (even.next != null) {
+        odds.append(odd.data);
+        evens.append(even.data);
+        odd = odd.next.next;
+        even = even.next.next;
+      }
+      odds.append(odd.data);
+      evens.append(even.data);
+    } else {
+      while (odd.next != null) {
+        odds.append(odd.data);
+        evens.append(even.data);
+        odd = odd.next.next;
+        even = even.next.next;
+      }
+      odds.append(odd.data);
+    }
+    System.out.println("Odds: " + odds);
+    System.out.println("Evens: " + evens);
+  }
+
   /****************************************
   * Recursively prints the list in reverse
   *
@@ -485,6 +555,11 @@ public class SinglyLinkedList<Item extends Comparable> {
     sortedInsertTest(numbers);
     numbers.removeDuplicates();
     System.out.println("Removed duplicates from sorted list: " + numbers);
+    numbers.moveLastToFront();
+    System.out.println("Moved last element to the front:" + numbers);
+    numbers.deleteAlternateElements();
+    System.out.println("Delete alternate elements:" + numbers);
+    alternatingSplitTest();
   }
 
   public static void palindromeTest(SinglyLinkedList<String> list) {
@@ -525,6 +600,19 @@ public class SinglyLinkedList<Item extends Comparable> {
     System.out.print("Inserting 0 in sorted order into the list: ");
     list.sortedInsert(0);
     System.out.println(list);
+  }
+
+  public static void alternatingSplitTest() {
+    SinglyLinkedList<Integer> list = new SinglyLinkedList<Integer>();
+    for (int i = 0; i < 11; i++) {
+      if (i % 2 == 0) {
+        list.append(1);
+      } else {
+        list.append(0);
+      }
+    }
+    System.out.println("Original list of elements: " + list);
+    list.alternatingSplit();
   }
 
 }
