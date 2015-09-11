@@ -439,7 +439,7 @@ public class SinglyLinkedList<Item extends Comparable> {
     if (size % 2 == 0) {
       while (even.next != null) {
         odds.append(odd.data);
-        evens.append(even.data);
+        evens.append(even.data); // TODO Refactor
         odd = odd.next.next;
         even = even.next.next;
       }
@@ -479,26 +479,28 @@ public class SinglyLinkedList<Item extends Comparable> {
     }
   }
 
+
+
   /*****************
   * Prints the list.
   * Time: O(n)
   * Space: O(1)
   ******************/
   public String toString() {
-    StringBuilder sb = new StringBuilder();
+    StringBuilder builder = new StringBuilder();
     if (isEmpty()) {
-      sb.append("[]");
+      builder.append("[]");
     } else {
-      sb.append("[ ");
+      builder.append("[ ");
       for (Node cur = head; cur != null; cur = cur.next) {
         if (cur.next != null) {
-          sb.append(cur.data + ", ");
+          builder.append(cur.data + ", ");
         } else {
-          sb.append(cur.data + " ]");
+          builder.append(cur.data + " ]");
         }
       }
     }
-    return sb.toString();
+    return builder.toString();
   }
 
   /* Helper Methods */
