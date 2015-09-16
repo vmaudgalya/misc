@@ -4,7 +4,7 @@
 * List does not support null elements.
 * @author Varun Maudgalya
 *****************************************************************/
-public class SinglyLinkedList<Item extends Comparable> {
+public class SinglyLinkedList<Item extends Comparable<Item> {
   
   private Node head;
   private int size;

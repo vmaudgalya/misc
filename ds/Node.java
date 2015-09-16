@@ -3,7 +3,7 @@
 *
 * @author Varun Maudgalya
 *****************************************************************/
-public class Node<Item extends Comparable> {
+public class Node<Item extends Comparable<Item> {
   private Node next;
   private Item data;
 
@@ -36,7 +36,7 @@ public class Node<Item extends Comparable> {
   }
 
   public String toString() {
-    return this.data + "->";
+    return this.data.toString();
   }
 
 }
