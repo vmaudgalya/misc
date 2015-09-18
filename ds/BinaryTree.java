@@ -94,7 +94,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         return current.value;
       }
     }
-    throw new java.util.NoSuchElementException("The key does not exist in the tree!");
+    return null;
   }
 
   public void put(Key key, Value value) {
@@ -116,6 +116,38 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
     current.size = size(current.left) + size(current.right) + 1;  
     return current;
+  }
+
+  public void iput(Key key, Value value) {
+    nullCheck(key);
+    if (isEmpty()) {
+      root = new Node(key, value, 1);
+      return;
+    }
+    Node current = root;
+    Node parent = null;
+    int cmp = 0;
+    while (current != null) {
+      cmp = key.compareTo(current.key);
+      parent = current;  
+      if (cmp < 0) {
+        current = current.left;
+      } else if (cmp > 0) {
+        current = current.right;
+      } else {
+        current.value = value;
+        return;
+      }
+    }
+    if (cmp < 0) {
+      parent.left = new Node(key, value, 1);
+    } else {
+      parent.right = new Node(key, value, 1);
+    }
+  }
+
+  public boolean contains(Key key) {
+    return iget(key) != null;
   }
 
   // General Helpers
@@ -142,6 +174,15 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     System.out.println("Adding 7: null to the tree");
     tree.put(7, null);
     System.out.println(tree.iget(7) + " is the value of getting(7)");
+    System.out.println("Tree size " + tree.size());
+    System.out.println("Adding 15 : \"chicken\" to tree");
+    tree.iput(15, "chicken");
+    System.out.println("Tree size " + tree.size());
+    System.out.println("Adding 12 : \"birds\" to tree");
+    tree.iput(12, "birds");
+    System.out.println("Tree size " + tree.size());
+    System.out.println("Adding 7 : \"elephant\" to tree...key 7 is already in the tree");
+    tree.iput(7, "elephant");
     System.out.println("Tree size " + tree.size());
   }
 
