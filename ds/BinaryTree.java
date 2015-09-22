@@ -50,7 +50,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
   * Given a Key, returns the value associated with the key
   * If key does not exist in tree, throws NoSuchElementException()
   * Time: O(n)
-  * Space: O(1);
+  * Space: O(n);
   ****************************************************************/
   public Value get(Key key) {
     nullCheck(key);
@@ -74,7 +74,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
   /***************************************************************
   * Iterative version
   * Given a Key, returns the value associated with the key
-  * If key does not exist in tree, throws NoSuchElementException()
+  * If key does not exist in tree, return null
   * Time: O(n)
   * Space: O(1);
   ****************************************************************/
@@ -97,6 +97,14 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     return null;
   }
 
+
+  /**************************************************
+  * Recursive version
+  * Insert a given key and value pair into the tree
+  * Null keys are not supported
+  * Time: O(n)
+  * Space: O(n);
+  ***************************************************/
   public void put(Key key, Value value) {
     nullCheck(key);
     root = put(key, value, root);
@@ -118,6 +126,14 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     return current;
   }
 
+
+  /**************************************************
+  * Iterative version
+  * Insert a given key and value pair into the tree
+  * Null keys are not supported
+  * Time: O(n)
+  * Space: O(1);
+  ***************************************************/
   public void iput(Key key, Value value) {
     nullCheck(key);
     if (isEmpty()) {
@@ -146,6 +162,12 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
   }
 
+
+/***********************************************
+* Returns true if the tree contains a given key
+* Time: O(n)
+* Space: O(n)
+************************************************/
   public boolean contains(Key key) {
     return iget(key) != null;
   }

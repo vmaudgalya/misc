@@ -462,7 +462,7 @@ public class SinglyLinkedList<Item extends Comparable<Item> {
   * Recursively prints the list in reverse
   *
   * Time: O(n)
-  * Space: O(1)
+  * Space: O(n)
   ****************************************/
   public void printReverse() {
     if (size == 1 || isEmpty()) {
