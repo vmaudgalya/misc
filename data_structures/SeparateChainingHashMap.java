@@ -60,6 +60,7 @@ public class SeparateChainingHashMap<Key, Value> {
     for (int i = 0; i < capacity; i++) {
       table[i] = new Chain();
     }
+    this.capacity = capacity;
   }
 
   public SeparateChainingHashMap() {
@@ -98,7 +99,11 @@ public class SeparateChainingHashMap<Key, Value> {
 
   public Value remove(Key key) {
     nullCheck(key);
-    return table[hash(key)].remove(key);
+    Value val = table[hash(key)].remove(key);
+    if (val != null) {
+      size--;
+    }
+    return val;
   }
 
   private void nullCheck(Key key) {
@@ -110,9 +115,13 @@ public class SeparateChainingHashMap<Key, Value> {
   public static void main(String[] args) {
     SeparateChainingHashMap<String, Integer> map = new SeparateChainingHashMap<String, Integer>();
     map.put("Dogs", 2);
-    map.put("Cats", 4);
+    map.put("Cats", 40);
     map.put("Ducks", 7);
-    System.out.println(remove("Ducks"));
+    System.out.println(map.containsKey("Ducks")); // true
+    System.out.println(map.size()); // 3
+    System.out.println(map.remove("Cats")); // 40
+    System.out.println(map.size()); // 2
+
 
   }
 }
