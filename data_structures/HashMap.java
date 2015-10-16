@@ -126,12 +126,17 @@ public class HashMap<Key, Value> {
   }
 
   private void resize(int newCapacity) {
-    Node[] resized = (Node[]) new Node[newCapacity];
+    HashMap<Key, Value> temp = new HashMap<Key, Value>(newCapacity);
     for (int i = 0; i < capacity; i++) {
-      resized[i] = table[i];
+      if (table[i] != null) {
+        for (Node<Key, Value> current = table[i]; current != null; current = current.next) {
+          temp.put(current.key, current.value);
+        }
+      }
     }
-    table = resized;
-    this.capacity = newCapacity;
+    this.capacity = temp.capacity;
+    this.table = temp.table;
+    this.size = temp.size;
   }
 
   private void nullCheck(Key key) {
@@ -160,11 +165,15 @@ public class HashMap<Key, Value> {
     System.out.println("HashMap is now: " + map);
 
     System.out.println("Resizing test");
-    for (int i = 0; i < 2000; i++) {
+    for (int i = 24; i < 2000; i++) {
       map.put(i, "ALIEN");
     }
     System.out.println(map);
-
+    System.out.println(map.get(1));
+    System.out.println(map.get(3));
+    System.out.println(map.get(5));
+    System.out.println(map.get(22));
+    System.out.println("The size is " + map.size());
   }
 
 
