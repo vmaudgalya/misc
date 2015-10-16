@@ -3,7 +3,7 @@ public class HashMap<Key, Value> {
   private class Node<Key, Value> {
     Key key;
     Value value;
-    Node next;
+    Node<Key, Value> next;
     public Node(Key key, Value value, Node next) {
       this.key = key;
       this.value = value;
@@ -37,13 +37,13 @@ public class HashMap<Key, Value> {
 
   public Value get(Key key) {
     nullCheck(key);
-    Node bucket = table[hash(key)];
+    Node<Key, Value> bucket = table[hash(key)];
     if (bucket == null) {
       return null;
     } else {
-      for (Node cur = bucket; cur != null; cur = cur.next) {
+      for (Node<Key, Value> cur = bucket; cur != null; cur = cur.next) {
         if (key.equals(cur.key)) {
-          return (Value) cur.value;
+          return cur.value;
         }
       }
       return null;
@@ -56,7 +56,7 @@ public class HashMap<Key, Value> {
     if (table[index] == null) {
       table[index] = new Node(key, value, null);
     } else {
-      for (Node cur = table[index]; cur != null; cur = cur.next) {
+      for (Node<Key, Value> cur = table[index]; cur != null; cur = cur.next) {
         if (key.equals(cur.key)) {
           cur.value = value;
           return;
@@ -89,17 +89,17 @@ public class HashMap<Key, Value> {
     if (table[index] == null) {
       return null;
     } else if (key.equals(table[index].key)) {
-      Node victim = table[index];
+      Node<Key, Value> victim = table[index];
       table[index] = table[index].next;
       size--;
-      return (Value) victim.value;
+      return victim.value;
     }
-    for (Node cur = table[index]; cur.next != null; cur = cur.next) {
+    for (Node<Key, Value> cur = table[index]; cur.next != null; cur = cur.next) {
       if (key.equals(cur.next.key)) {
-        Node victim = cur.next;
+        Node<Key, Value> victim = cur.next;
         cur.next = cur.next.next;
         size--;
-        return (Value) victim.value;
+        return victim.value;
       }
     }
     return null;
@@ -114,7 +114,7 @@ public class HashMap<Key, Value> {
       int seen = 0;
       for (int i = 0; i < capacity; i++) {
         if (table[i] != null) {
-          for (Node cur = table[i]; cur != null; cur = cur.next) {
+          for (Node<Key, Value> cur = table[i]; cur != null; cur = cur.next) {
             seen++;
             builder.append(cur.toString() + (seen != size ? "," : ""));
           }
@@ -165,7 +165,7 @@ public class HashMap<Key, Value> {
     System.out.println("HashMap is now: " + map);
 
     System.out.println("Resizing test");
-    for (int i = 24; i < 2000; i++) {
+    for (int i = 24; i < 400; i++) {
       map.put(i, "ALIEN");
     }
     System.out.println(map);
