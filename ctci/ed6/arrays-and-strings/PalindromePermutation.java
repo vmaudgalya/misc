@@ -1,7 +1,7 @@
 public class PalindromePermutation {
 
   /****
-  * Time: O(n)
+  * Time: O(nlogn) where n is the number of characters
   * Space: O(1) in-place
   *****/
   public static boolean isPermutation(char[] str) {
@@ -36,7 +36,7 @@ public class PalindromePermutation {
   }
 
   /****************************
-  * Time: O(n)
+  * Time: O(n) where n is the number of characters
   * Space: O(1) constant space
   *****************************/
   public static boolean isPermutation(String str) {
