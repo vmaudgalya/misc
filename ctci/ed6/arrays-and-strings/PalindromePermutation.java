@@ -1,33 +1,48 @@
 public class PalindromePermutation {
 
-  // public static boolean isPermutation(String str) {
-  //   char[] letters = str.toCharArray();
-  //   java.util.Arrays.sort(letters);
-  //   int count = 0;
-  //   for (int i = 1; i < letters.length; i++) {
-  //     if (letters[i] == letters[i-1]) {
-  //       count++;
-  //     } else {
-  //       if (cantBeMatched(count)) {
-  //         return false;
-  //       }
-  //       count = 0;
-  //     }
-  //   }
-  //   if (letters[letters.length-1] != letters[letters.length-2]) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  /****
+  * Time: O(n)
+  * Space: O(1) in-place
+  *****/
+  public static boolean isPermutation(char[] str) {
+    if (str == null) {
+      return false;
+    }
+    java.util.Arrays.sort(str);
+    int count = 0;
+    int maxOdds = 0;
+    for (int i = 1; i < str.length; i++) {
+      if (str[i] == str[i-1]) {
+        count++;
+      } else {
+        if (count % 2 != 1) {
+          maxOdds++;
+          if (maxOdds > 1) {
+            return false;
+          }
+        }
+        count = 0;
+      }
+    }
+    if(str[str.length-1] == str[str.length-2]) {
+      if (count % 2 != 1) {
+        maxOdds++;
+        if (maxOdds > 1) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-  // private static boolean cantBeMatched(int count) {
-  //   if (!(count == 0 || count == 1 || (count % 2 == 1))) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
+  /****************************
+  * Time: O(n)
+  * Space: O(1) constant space
+  *****************************/
   public static boolean isPermutation(String str) {
+    if (str == null || str.equals("")) {
+      return false;
+    }
     char[] characters = new char[256];
     for (int i = 0; i < str.length(); i++) {
       characters[str.charAt(i)]++;
@@ -50,7 +65,12 @@ public class PalindromePermutation {
   }
 
   public static void isPermutationTest() {
-    assert isPermutation("acoca") == true;
+    String disguisedPalindrome = "tacocatt";
+    assert isPermutation(disguisedPalindrome) == false;
+    disguisedPalindrome = "tacocat";
+    assert isPermutation(disguisedPalindrome) == true;
+    disguisedPalindrome = "aaa";
+    assert isPermutation(disguisedPalindrome) == true;
   }
 
 }
