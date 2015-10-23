@@ -1,3 +1,7 @@
+
+/***
+* There are 2 viable solutions depending on the client program's needs.
+****/
 public class PalindromePermutation {
 
   /****
