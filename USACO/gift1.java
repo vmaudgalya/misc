@@ -37,6 +37,7 @@ class gift1 {
     for (Entry<String, Integer> entry : people.entrySet()) {
       out.println(entry.getKey() + " " + entry.getValue());
     }
+    reader.close();
     out.close();
   }
 
