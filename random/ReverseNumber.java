@@ -1,5 +1,10 @@
 public class ReverseNumber {
   
+
+  /***
+  * Time: O(n) where n is the number of digits
+  * Space: O(1) in-place
+  ***/
   public static int reverse(int n) { //2015 -> 5102
     if (n < 10) {
       return n;
