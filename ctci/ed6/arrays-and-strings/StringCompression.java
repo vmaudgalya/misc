@@ -1,5 +1,9 @@
 public class StringCompression {
 
+  /*****
+  * Time: O(n) where n is the number of characters in the string
+  * Space: O(n)
+  *****/
   public static String compress(String str) {
     if (str == null || str.length() <= 2) {
       return str;
