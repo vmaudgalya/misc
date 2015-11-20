@@ -1,23 +1,28 @@
-
 import java.util.Set;
 import java.util.HashSet;
 
 public class RemoveDuplicates {
 
-  public static List<String> removeDuplicatesQuickly(List<String> list) {
-    Set<String> uniqueElements = new HashSet<String>();
-    for (String element : list) {
-      if (uniqueElements.contains(element)) {
-        list.remove(element);
+  public static Node removeDuplicates(final Node head) {
+    if (head == null || head.next == null) {
+      return head;
+    }
+    Set<Integer> set = new HashSet<Integer>();
+    set.add(head.data);
+    Node current = head;
+    while (current.next != null) {
+      if (set.contains(current.next.data)) {
+        current.next = current.next.next;
       } else {
-        uniqueElements.add(element);
+        set.add(current.next.data);
+        current = current.next;
       }
     }
-    return list;
+    return head;
   }
 
-  public static List<String> removeDuplicatesInPlace(List<String> list) {
-
+  public static Node removeDuplicatesInPlace(Node head) {
+    return null;
   }
 
 
@@ -26,15 +31,18 @@ public class RemoveDuplicates {
   }
 
   public static void removeDuplicatesTest() {
-    final String[] countries = {"America", "Egypt", "Australia", 
-                                "Russia", "Africa", "China", "Bolivia", "America", "Egypt"};
-    final int initialSize = countries.length;
-    final LinkedList<String> countryNamesWithDuplicates = new LinkedList<String>();
-    for (String country : countries) {
-      countryNamesWithDuplicates.addLast(country);
+    final int[] numbers = {1, 2, 3, 4, 3, 2, 1};
+    final int[] uniqueNumbers = {1, 2, 3, 4};
+    final LinkedList<Integer> listOfDups = new LinkedList<Integer>();
+    final LinkedList<Integer> listOfUniques = new LinkedList<Integer>();
+    for (final int number : numbers) {
+      listOfDups.addLast(number);
     }
-    final LinkedList<String> countryNames = removeDuplicatesQuickly(countryNamesWithDuplicates);
-    assert countryNames.size() == (initialSize - 2);
+    for (final int number : uniqueNumbers) {
+      listOfUniques.addLast(number);
+    }
+    listOfDups.head = removeDuplicates(listOfDups.head);
+    assert listOfUniques.equals(listOfDups);
   }
 
 

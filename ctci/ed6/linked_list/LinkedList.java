@@ -1,6 +1,6 @@
 /*
 ** @author Varun Maudgalya
-** @brief Singly Linked List Implementation
+** @brief Singly Linked List Implementation for CTCI
 ** @date 11/14/2015
 */
 import java.util.Iterator;
@@ -8,15 +8,15 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<E extends Comparable<E>> implements Iterable<E> {
 
-  private class Node {
+  public class Node { // exposed for the sake of doing the questions
     E data;
-    Node next; // Getters/setters not specified as this class is internal, and to reduce code bulk
+    Node next;
     public Node(E data) {
       this.data = data;
     }
   }
 
-  private Node head;
+  public Node head; // exposed for the sake of doing the questions
   private int size;
 
   public int size() {
@@ -89,7 +89,7 @@ public class LinkedList<E extends Comparable<E>> implements Iterable<E> {
     return new ListIterator();
   }
 
-  private class ListIterator extends Iterator {
+  private class ListIterator implements Iterator<E> {
 
     private Node current;
 
