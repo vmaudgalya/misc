@@ -21,8 +21,23 @@ public class RemoveDuplicates {
     return head;
   }
 
-  public static Node removeDuplicatesInPlace(Node head) {
-    return null;
+  public static Node removeDuplicatesInPlace(final Node head) {
+    if (head == null || head.next == null) {
+      return head;
+    }
+    Node current = head;
+    while (current != null && current.next != null) {
+      Node checker = current;
+      while (checker.next != null) {
+        if (current.data.compareTo(checker.next.data) == 0) {
+          checker.next = checker.next.next;
+        } else {
+          checker = checker.next;
+        }
+      }
+      current = current.next;
+    }
+    return head;
   }
 
 
@@ -31,17 +46,17 @@ public class RemoveDuplicates {
   }
 
   public static void removeDuplicatesTest() {
-    final int[] numbers = {1, 2, 3, 4, 3, 2, 1};
-    final int[] uniqueNumbers = {1, 2, 3, 4};
-    final LinkedList<Integer> listOfDups = new LinkedList<Integer>();
-    final LinkedList<Integer> listOfUniques = new LinkedList<Integer>();
+    int[] numbers = {1, 2, 3, 4, 3, 2, 1};
+    int[] uniqueNumbers = {1, 2, 3, 4};
+    LinkedList<Integer> listOfDups = new LinkedList<Integer>();
+    LinkedList<Integer> listOfUniques = new LinkedList<Integer>();
     for (final int number : numbers) {
       listOfDups.addLast(number);
     }
     for (final int number : uniqueNumbers) {
       listOfUniques.addLast(number);
     }
-    listOfDups.head = removeDuplicates(listOfDups.head);
+    listOfDups.head = removeDuplicatesInPlace(listOfDups.head);
     assert listOfUniques.equals(listOfDups);
   }
 
