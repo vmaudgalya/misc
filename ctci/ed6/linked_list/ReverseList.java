@@ -23,7 +23,7 @@ public class ReverseList {
   }
 
   public static void main(String[] args) {
-
+    reverseListTest();
   }
 
   public static void reverseListTest() {
