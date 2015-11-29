@@ -20,7 +20,7 @@ public class LinkedList<E extends Comparable<E>> implements Iterable<E> {
   private int size;
 
   public int size() {
-    return this.size();
+    return this.size;
   }
 
   public boolean isEmpty() {
