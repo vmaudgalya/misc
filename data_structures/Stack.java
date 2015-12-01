@@ -1,27 +1,30 @@
 /***
 * @author Varun Maudgalya
 * Stack Implementation using resizing array
-* O(1) constant amortized push/pop
+* O(1) ammortized push/pop
 ***/
 
 import java.util.Iterator;
 
 public class Stack<E> implements Iterable<E> {
 
-  private E[] stack;
-  private int N; // Points to next insertion point
+  E[] stack;
+  int N; // Points to next insertion point
+  int size;
 
   @SuppressWarnings("unchecked")
   public Stack() {
     this.stack = (E[]) new Object[1];
+    this.size = 0;
+    this.N = 0;
   }
 
   public int size() {
-    return this.N;
+    return this.size;
   }
 
   public boolean isEmpty() {
-    return this.N == 0;
+    return size == 0;
   }
 
   @SuppressWarnings("unchecked")
@@ -35,12 +38,13 @@ public class Stack<E> implements Iterable<E> {
 
   public void push(final E data) {
     if (data == null) {
-      throw new NullPointerException("Null elements not permitted");
+      return;
     }
     stack[this.N++] = data;
     if (this.N >= this.stack.length) {
       this.resize(2*this.stack.length);
     }
+    size++;
   }
 
   public E peek() {
@@ -54,11 +58,9 @@ public class Stack<E> implements Iterable<E> {
     if (this.isEmpty()) {
       return null; // Error
     }
-    final E data = this.stack[--this.N];
-    this.stack[this.N] = null; // Avoid data loitering
-    if (N < stack.length/4) {
-      resize(stack.length/2);
-    }
+    final E data = stack[--this.N];
+    stack[N] = null; // Avoid data loitering
+    size--;
     return data;
   }
 
