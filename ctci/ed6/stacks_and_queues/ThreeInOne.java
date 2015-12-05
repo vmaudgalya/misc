@@ -1,16 +1,19 @@
-public class ThreeInOne {
+
+public class ThreeInOne<E> {
+
   private int[] stackSizes;
-  private int[] arrayOfStacks;
+  private E[] arrayOfStacks;
   private int capacity;
   private final int NUMBER_OF_STACKS = 3;
 
+  @SuppressWarnings("unchecked")
   public ThreeInOne(int capacity) {
     stackSizes = new int[NUMBER_OF_STACKS];
-    arrayOfStacks = new int[NUMBER_OF_STACKS*capacity];
+    arrayOfStacks = (E[]) new Object[NUMBER_OF_STACKS*capacity];
     this.capacity = capacity;
   }
 
-  public void push(final int data, final int stackNumber) {
+  public void push(final int stackNumber, final E data) throws Exception {
     if (isFull(stackNumber)) {
       throw new Exception("Error: Stack " + stackNumber + " is full");
     }
@@ -19,12 +22,12 @@ public class ThreeInOne {
     stackSizes[stackNumber]++;
   }
 
-  public int pop(final int stackNumber) {
+  public E pop(final int stackNumber) {
     if (isEmpty(stackNumber)) {
       return null;
     }
     int N = getTopOfStack(stackNumber);
-    final int data = arrayOfStacks[--N];
+    final E data = arrayOfStacks[--N];
     arrayOfStacks[N] = null;
     stackSizes[stackNumber]--;
     return data;
@@ -38,13 +41,13 @@ public class ThreeInOne {
     return stackSizes[stackNumber] == 0;
   }
 
-  public int peek(final int stackNumber) {
+  public E peek(final int stackNumber) {
     int N = getTopOfStack(stackNumber);
     return arrayOfStacks[--N];
   }
 
   private int getTopOfStack(int stackNumber) {
-    int offset = (stackNumber * NUMBER_OF_STACKS) + stackSizes[stackNumber];
+    int offset = (stackNumber * capacity) + stackSizes[stackNumber];
     return offset;
   }
 
@@ -52,7 +55,7 @@ public class ThreeInOne {
   public String toString() {
     StringBuilder builder = new StringBuilder("[ ");
     for (int i = 0; i < arrayOfStacks.length; i++) {
-      builder.append(arrayOfStacks[i] + (i == arrayOfStacks.length-1 ? "", ", "));
+      builder.append(arrayOfStacks[i] + (i == arrayOfStacks.length-1 ? "" : ", "));
     }
     builder.append(" ]");
     return builder.toString();
