@@ -8,27 +8,21 @@ import java.util.ArrayDeque;
 
 public class ExpressionEvaluator {
 
-//  public double evaluate(final String expression) {
-//    if (expression == null) {
-//      throw new NullPointerException("Null expressions cannot be evaluated");
-//    } else if (expression.equals("")) {
-//      throw new Exception("Empty expressions cannot be evaluated");
-//    } // assumes valid input from here onwards
-//    final String postfixExpression = this.infixToPostfix(expression);
-//    return evaluatePostfix(postfixExpression);
-//  }
-
-  public static void main(String[] args) {
-    ExpressionEvaluator evaluator = new ExpressionEvaluator();
-//    System.out.println(evaluator.infixToPostfix("( 1 + 2 / 3 * ( 4 + 5 ) - 6"));
-    System.out.println(evaluator.infixToPostfix("4 + 2 * 5 + 1"));
+  public double evaluate(final String expression) throws Exception {
+    if (expression == null) {
+      throw new NullPointerException("Null expressions cannot be evaluated");
+    } else if (expression.equals("")) {
+      throw new Exception("Empty expressions cannot be evaluated");
+    } // assumes valid input from here onwards
+    final String postfixExpression = this.infixToPostfix(expression);
+    return evaluatePostfix(postfixExpression);
   }
 
+  public static void main(String[] args) throws Exception {
+    ExpressionEvaluator evaluator = new ExpressionEvaluator();
+    System.out.println(evaluator.evaluate("2 * 3 + 5 * 4 - 9"));
+  }
 
-  /**
-  * Valid input is assumed, requires space delimited infix expression
-  * O(n) time and space
-  */
   private String infixToPostfix(final String expression) {
     Deque<String> stack = new ArrayDeque<String>();
     String[] tokens = expression.split(" ");
@@ -40,7 +34,7 @@ public class ExpressionEvaluator {
 
       } else if (isClosingParanthesis(tokens[i])) {
         while (!isOpeningParanthesis(stack.peek())) {
-          postfixExpression.append(stack.pop());
+          postfixExpression.append(stack.pop() + " ");
         }
         stack.pop(); // Remove the leftover paranthesis
 
@@ -50,7 +44,7 @@ public class ExpressionEvaluator {
         } else {
           if (getOperatorPriority(stack.peek()) >= getOperatorPriority(tokens[i])) {
             while (!stack.isEmpty() && getOperatorPriority(stack.peek()) >= getOperatorPriority(tokens[i])) {
-              postfixExpression.append(stack.pop());
+              postfixExpression.append(stack.pop()  + " ");
             }
             stack.push(tokens[i]);
           } else {
@@ -58,20 +52,50 @@ public class ExpressionEvaluator {
           }
         }
 
-      } else if (isInteger(tokens[i])) {
-        postfixExpression.append(Integer.parseInt(tokens[i]));
+      } else if (isNumeric(tokens[i])) {
+        postfixExpression.append(Integer.parseInt(tokens[i])  + " ");
       }
 
     }
     while (!stack.isEmpty()) {
-      postfixExpression.append(stack.pop());
+      postfixExpression.append(stack.pop()  + " "); // Pop everything left on the stack and append to the postfix expression
     }
-    return postfixExpression.toString();
+    return postfixExpression.toString().trim();
   }
 
-  private boolean isInteger(final String token) {
+  private double evaluatePostfix(String postfixExpression) throws Exception {
+    Deque<Double> stack = new ArrayDeque<Double>();
+    String[] tokens = postfixExpression.split(" ");
+    for (int i = 0; i < tokens.length; i++) {
+      if (isOperator(tokens[i])) {
+        double secondOperand = stack.pop();
+        double firstOperand = stack.pop();
+        double result = performCalculation(tokens[i], firstOperand, secondOperand);
+        stack.push(result);
+      } else if (isNumeric(tokens[i])){
+        stack.push(Double.parseDouble(tokens[i]));
+      }
+    }
+    return stack.pop();
+  }
+
+  private double performCalculation(final String operator,
+        final double first, final double second) throws Exception {
+    if (operator.equals("+")) {
+      return first + second;
+    } else if (operator.equals("-")) {
+      return first - second;
+    } else if (operator.equals("*")) {
+      return first * second;
+    } else if (operator.equals("/")) {
+      return first / second;
+    }
+    throw new Exception("Invalid operator in expression");
+  }
+
+  private boolean isNumeric(final String token) {
     try {
-      Integer.parseInt(token);
+      Double.parseDouble(token);
     } catch (NumberFormatException error) {
       return false;
     }
