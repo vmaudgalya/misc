@@ -1,6 +1,5 @@
 /**********************************
 * @author Varun Maudgalya
-* @mail vmaudgalya@gmail.com
 * @problemName FCTRL
 * @problemId 11
 * @verdict Accepted
