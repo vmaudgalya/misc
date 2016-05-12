@@ -1,6 +1,5 @@
 /**********************************
 * @author Varun Maudgalya
-* @mail vmaudgalya@gmail.com
 * @problemName ADDREV
 * @problemId 42
 * @verdict Accepted
