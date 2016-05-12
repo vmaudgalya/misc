@@ -1,6 +1,5 @@
 /**********************************
 * @author Varun Maudgalya
-* @mail vmaudgalya@gmail.com
 * @problemName Dragon of Loowater
 * @problemId 11292
 * @verdict Accepted
